@@ -66,8 +66,8 @@ class User(AbstractBaseUser, PermissionsMixin):
                                        verbose_name='Admin')  # this field we inherit from PermissionsMixin.
     ref_code = models.CharField(max_length=10, verbose_name="Referal code", unique=True, null=True, blank=True)
     
-    is_confirmed_requirements = models.BooleanField(default=True)
-    is_confirmed_news = models.BooleanField(default=True)
+    is_confirmed_requirements = models.BooleanField(default=True, verbose_name="Confirmed terms")
+    is_confirmed_news = models.BooleanField(default=True, verbose_name="Confirmed receiving emails")
 
     def save(self, *args, **kwargs):
         if not self.ref_code:

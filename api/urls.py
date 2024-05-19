@@ -8,5 +8,6 @@ urlpatterns = [
     path('docs/', documentation),
     
     #APIS
-    path('user/', include("users.urls"))
+    path('user/', include("users.urls")),
+    path('estate/', include("estate.urls"))
 ]

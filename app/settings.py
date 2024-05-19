@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     
     "api",
-    "users"
+    "users",
+    "estate",
 ]
 
 MIDDLEWARE = [
@@ -186,3 +187,6 @@ EMAIL_PORT = 25  # SMTP port (usually 25)
 EMAIL_USE_TLS = False  # Set to True if using TLS/SSL
 EMAIL_HOST_USER = 'username'  # SMTP username
 EMAIL_HOST_PASSWORD = 'password'  # SMTP password
+
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
