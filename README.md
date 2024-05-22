@@ -17,18 +17,26 @@ cd real-estate-service
 
 ```
 
---> Create a virtual environment :
+--> Install a virtual environment :
 ```bash
 # Let's install virtualenv first
 pip install virtualenv
 
-# Then we create our virtual environment
+```
+--> Create a virtual environment :
+### Mac OS, Linux
+```bash
 python3 -m venv venv
+
+```
+### Windows
+```bash
+python -m venv venv
 
 ```
 
 --> Activate the virtual environment :
-### Mac OS
+### Mac OS, Linux
 ```bash
 source venv/bin/activate
 
@@ -42,8 +50,14 @@ venv/Scripts/activate
 ### Running the App
 
 --> To run the App, we use :
+### Mac OS, Linux
 ```bash
 python3 manage.py runserver
+
+```
+### Windows
+```bash
+python manage.py runserver
 
 ```
 
