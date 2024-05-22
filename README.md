@@ -19,7 +19,6 @@ cd real-estate-service
 
 --> Install a virtual environment :
 ```bash
-# Let's install virtualenv first
 pip install virtualenv
 
 ```
