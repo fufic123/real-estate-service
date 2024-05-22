@@ -25,6 +25,7 @@ class EstateSerializer(serializers.ModelSerializer):
         estate = Estate.objects.create(**validated_data)
         if accessabilities:
             estate.accessabilities.set(accessabilities)
-        for image_data in images_data:
-            Image.objects.create(estate=estate, **image_data)
+        if images_data:
+            for image_data in images_data:
+                Image.objects.create(estate=estate, **image_data)
         return estate

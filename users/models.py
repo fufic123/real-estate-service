@@ -32,7 +32,7 @@ class CustomUserManager(BaseUserManager):
         if username is None and name is not None and surname is not None:
             username = f"{name.capitalize()} {surname.capitalize()}"
         
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(email, password, name=name, surname=surname, username=username, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)

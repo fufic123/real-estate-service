@@ -9,5 +9,6 @@ urlpatterns = [
     
     #APIS
     path('user/', include("users.urls")),
-    path('estate/', include("estate.urls"))
+    path('estate/', include("estate.urls")),
+    path('tg/', include("telegram.urls"))
 ]
