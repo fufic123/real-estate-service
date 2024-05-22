@@ -57,6 +57,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     instagram = models.URLField(max_length=500, null=True, blank=True, verbose_name="Instagram")
     facebook = models.URLField(max_length=500, null=True, blank=True, verbose_name="Facebook")
     
+    telegram_chat_id = models.CharField(max_length=30, null=True, blank=True, verbose_name="Telegram Chat ID")
+    
     #Technical
     is_active = models.BooleanField(default=True,
                                     verbose_name='Active')  # must needed, otherwise you won't be able to loginto django-admin.

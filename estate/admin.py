@@ -16,3 +16,6 @@ class ImageAdmin(admin.ModelAdmin):
 class AccessabilityAdmin(admin.ModelAdmin):
     list_display = ['id', 'name']
     search_fields = ['name']
+
+
+admin.site.register(Type)

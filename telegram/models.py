@@ -20,7 +20,7 @@ class SingletonModel(models.Model):
         return obj
 
 class BotAdmin(SingletonModel):
-    icon = models.ImageField(upload_to="tgbot/", verbose_name="Icon")
+    icon = models.ImageField(upload_to="tgbot/", null=True, blank=True, verbose_name="Icon")
     name = models.CharField(max_length=50, verbose_name="Name")
     url = models.URLField(max_length=200, verbose_name="URL")
     token = models.CharField(max_length=255, unique=True, verbose_name="Token")

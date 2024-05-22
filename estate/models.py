@@ -16,6 +16,10 @@ class Accessability(models.Model):
     def __str__(self):
         return self.name
     
+    
+    class Meta:
+        verbose_name = "Accessability"
+        verbose_name_plural = "Accessabilities"
 
 class Type(models.Model):
     name = models.CharField(max_length=50)
