@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+TELEGRAM_API_KEY = os.environ.get("TELEGRAM_API_KEY", "")
+TELEGRAM_API_HASH = os.environ.get("TELEGRAM_API_HASH", "")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

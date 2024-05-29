@@ -1,48 +1,48 @@
-from django.test import TestCase
-from django.core.exceptions import ValidationError
+from rest_framework.test import APITestCase
+from rest_framework import status
+from users.models import User
+from .models import Estate, Image
+from django.urls import reverse
+from rest_framework_simplejwt.tokens import RefreshToken
+from io import BytesIO
+from PIL import Image as PilImage
 
-from .models import *
-class EstateModelTests(TestCase):
+class EstateCreateTest(APITestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            email='owner@example.com',
-            password='password123',
-            name='Owner',
-            surname='Estate'
-        )
-        self.etype = Type.objects.create(name='Apartment')
-        self.accessability = Accessability.objects.create(name='Elevator')
+        # Create a test user
+        self.user = User.objects.create_user(username='testuser', password='testpassword', email="mksdlmslk@gmail.com")
+        
+        # Generate token for the test user
+        self.token = RefreshToken.for_user(self.user).access_token
+        
+        # URL for creating estate
+        self.url = reverse('create')
+
+    def generate_image_file(self, name='test_image.png'):
+        file = BytesIO()
+        image = PilImage.new('RGB', (100, 100))
+        image.save(file, 'PNG')
+        file.name = name
+        file.seek(0)
+        return file
 
     def test_create_estate(self):
-        estate = Estate.objects.create(
-            title='Beautiful Estate',
-            description='A beautiful estate with a nice view.',
-            user=self.user,
-            etype=self.etype,
-            location='123 Estate Ave',
-            price=1000000.00,
-            status='active',
-            stype='for_sale'
-        )
-        estate.accessabilities.add(self.accessability)
-        self.assertEqual(estate.title, 'Beautiful Estate')
-        self.assertEqual(estate.user, self.user)
-        self.assertEqual(estate.etype, self.etype)
-        self.assertEqual(estate.status, 'active')
-        self.assertEqual(estate.stype, 'for_sale')
-        self.assertIn(self.accessability, estate.accessabilities.all())
+        self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
 
-    def test_image_upload_limit(self):
-        estate = Estate.objects.create(
-            title='Limited Estate',
-            user=self.user,
-            etype=self.etype,
-            location='456 Estate Blvd',
-            price=500000.00
-        )
-        for i in range(20):
-            Image.objects.create(estate=estate, image=f'image_{i}.jpg')
-        
-        with self.assertRaises(ValidationError):
-            Image.objects.create(estate=estate, image='image_21.jpg')
-            estate.save()
+        data = {
+            'title': 'Test Estate',
+            'description': 'This is a test estate.',
+            'status': 'Available',
+            'price': 1000000,
+            'user': self.user.id,
+            'images': [self.generate_image_file()]
+        }
+
+        response = self.client.post(self.url, data, format='multipart')
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Estate.objects.count(), 1)
+        self.assertEqual(Image.objects.count(), 1)
+        estate = Estate.objects.get()
+        self.assertEqual(estate.title, 'Test Estate')
+

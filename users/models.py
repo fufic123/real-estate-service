@@ -56,8 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     website = models.URLField(max_length=500, null=True, blank=True, verbose_name="Website")
     instagram = models.URLField(max_length=500, null=True, blank=True, verbose_name="Instagram")
     facebook = models.URLField(max_length=500, null=True, blank=True, verbose_name="Facebook")
-    
-    telegram_chat_id = models.CharField(max_length=30, null=True, blank=True, verbose_name="Telegram Chat ID")
+    telegram = models.CharField(max_length=30, null=True, blank=True, verbose_name="Telegram group or channel link")
     
     #Technical
     is_active = models.BooleanField(default=True,

@@ -9,7 +9,7 @@ class EstateAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['id', 'estate', 'uploaded_at']
+    list_display = ['id', 'uploaded_at']
     search_fields = ['estate__title']
 
 @admin.register(Accessability)

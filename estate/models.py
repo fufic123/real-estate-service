@@ -6,7 +6,6 @@ from users.models import User
 
 # Create your models here.
 class Image(models.Model):
-    estate = models.ForeignKey('Estate', related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='estate_images/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -32,7 +31,7 @@ class Estate(models.Model):
     description = models.TextField(max_length=1000, null=True, blank=True, verbose_name="Description")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='estates', verbose_name="User",)
     accessabilities = models.ManyToManyField(Accessability, related_name='estates', blank=True, verbose_name="Accessabilities")
-    
+    images = models.ManyToManyField(Image, verbose_name="Images")
     etype = models.ForeignKey(Type, on_delete=models.SET_NULL, null=True, verbose_name="Property type")
     location = models.CharField(max_length=100, null=True, blank=True, verbose_name="Property's address")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, verbose_name="Price")
