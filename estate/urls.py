@@ -8,7 +8,7 @@ urlpatterns = [
     path('delete/', DeleteEstateView.as_view(), name='delete'),
     path('upload-images/', UploadImagesView.as_view(), name='upload-images'),
     path('delete-images/', DeleteImagesView.as_view(), name='delete-images'),
-    path('estates/', EstatesView.as_view(), name='estates'),
-    path('estate-info/', EstateInfoView.as_view(), name='estate-info'),
+    path('', EstatesView.as_view(), name='estates'),
+    path('info/', EstateInfoView.as_view(), name='estate-info'),
     path('accessabilities/', AccessabilitiesView.as_view(), name='accessabilities'),
 ]

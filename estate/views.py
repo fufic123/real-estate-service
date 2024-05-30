@@ -25,8 +25,6 @@ class CreateEstateView(APIView):
         serializer = EstateSerializer(data=data)
         if serializer.is_valid():
             try:
-                estate = serializer.save()
-
                 images = request.FILES.getlist('images')
                 if len(images) + estate.images.count() > 20:
                     return Response({"error": "Cannot upload more than 20 images."}, status=status.HTTP_400_BAD_REQUEST)
@@ -34,6 +32,8 @@ class CreateEstateView(APIView):
                 for image in images:
                     img = Image.objects.create(image=image)
                     estate.images.add(img)
+                    
+                estate = serializer.save()
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             except ValidationError as e:
@@ -126,14 +126,23 @@ class DeleteImagesView(APIView):
 
 
 class EstatesView(APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
+    # authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        user = request.user
-        queryset = Estate.objects.filter(user=user)
-        serializer = EstateSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        queryset = Estate.objects.all()
+        data = []
+        for estate in queryset:
+            images = []
+            for image in estate.images.all():
+                images.append({
+                    'url': image.image.url,  # Replace 'url' with the actual field names of your Image model
+                    'name': image.uploaded_at  # Replace 'name' with the actual field names of your Image model
+                })
+            data.append({
+                'images': images
+            })
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class EstateInfoView(APIView):
