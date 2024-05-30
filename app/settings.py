@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     "api",
     "users",
     "estate",
-    "telegram",
+    "tg",
 ]
 
 MIDDLEWARE = [
